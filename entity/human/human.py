@@ -1,8 +1,10 @@
 from entity.entity import *
+from entity.human.parents import Parents
 
 
 class Human(Entity):
     def __init__(self, gender, parents):
+        # type: (str, Parents) -> None
         Entity.__init__(self)
         self.gender = gender
         self.parents = parents
