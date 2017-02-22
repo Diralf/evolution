@@ -32,14 +32,15 @@ def main():
     human2 = FemaleHuman(Point(150, 150))
     human2.start_draw(win)
 
-
     def motion(event):
         pos = convert.pixel_to_line(
             event.x - 20,
             event.y - 20,
             20,
             grid_width)
-        poly_grid[pos].setFill("blue")
+        #poly_grid[pos].setFill("blue")
+        human2.body.figure.scale(4)
+        human2.body.figure.draw()
 
     win.bind('<Motion>', motion)
 

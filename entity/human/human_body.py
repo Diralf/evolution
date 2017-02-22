@@ -1,5 +1,6 @@
 from entity.entity_body import EntityBody
 from graph.graphics import *
+from graph.scalable_circle import ScalableCircle
 
 
 class HumanBody(EntityBody):
@@ -32,4 +33,4 @@ class ManHumanBody(HumanBody):
 class FemaleHumanBody(HumanBody):
     def __init__(self, position, size=HumanBody.min_size):
         # type: (Point, float) -> None
-        HumanBody.__init__(self, Circle(position, size / 2), position)
+        HumanBody.__init__(self, ScalableCircle(position, size / 2), position)
