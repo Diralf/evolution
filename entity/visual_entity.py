@@ -1,5 +1,5 @@
-from entity import Entity
-from entity_body import EntityBody
+from entity.entity import Entity
+from entity.entity_body import EntityBody
 from graph.graphics import GraphWin
 
 

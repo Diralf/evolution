@@ -13,6 +13,6 @@ class Human(Entity):
         self.temper_coeff = 0.0  # coefficient of temperature change
         self.speed = 0.0
 
-    def update(self):
+    def update(self, delta):
         self.age += 0.1
         self.temper *= self.temper_coeff

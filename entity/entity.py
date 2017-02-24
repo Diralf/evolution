@@ -6,5 +6,3 @@ class Entity:
     def __init__(self):
         self.id = Entity.valid_id
         Entity.valid_id += 1
-
-

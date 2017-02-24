@@ -12,7 +12,7 @@ def earth_climate(width, height):
             temp = top + step*i
         else:
             temp = middle - step*(i - height/2)
-        print(temp)
+
         for j in range(width):
             planet.append(Area(temp))
 

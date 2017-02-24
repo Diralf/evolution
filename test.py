@@ -1,19 +1,27 @@
 from geometry import convert
+from geometry.vectors import Vector
 from graph.hexagon import *
 from weather.weather_generator import *
 from weather.weather_color import *
 from entity.human.man_human import *
 
 # MAIN
+game = [True]
 
 
 def main():
-    win = GraphWin("My Circle", 1600, 800)
-    win.master.geometry('%dx%d+%d+%d' % (1600, 800, -10, 0))
+    win = GraphWin("My Circle", 1200, 600)
+    win.master.geometry('%dx%d+%d+%d' % (1200, 600, -10, 0))
 
     grid_width = 38
     grid_height = 26
     size = 20
+
+    v1 = Vector(3, 5)
+    v2 = Vector(5, 3)
+
+    print(v1)
+    print(v1 * 5)
 
     poly_grid = polygon_grid(
         Point(size, size), size, grid_width, grid_height)
@@ -28,9 +36,10 @@ def main():
 
     human = ManHuman(Point(100, 100))
     human.start_draw(win)
-
     human2 = FemaleHuman(Point(150, 150))
     human2.start_draw(win)
+    human.set_speed(1)
+    human2.set_speed(2)
 
     def motion(event):
         pos = convert.pixel_to_line(
@@ -40,9 +49,36 @@ def main():
             grid_width)
         poly_grid[pos].setFill("blue")
 
-    win.bind('<Motion>', motion)
+    def exit(event):
+        game[0] = False
 
-    print(win.getMouse())
+    win.bind('<Motion>', motion)
+    win.bind('<Button-1>', exit)
+
+    sleep_time = target_delta = 1. / 60
+    target_time = time.time()
+
+    counter = 30
+
+    while game[0]:
+        human.set_direction_on(5)
+        human2.set_direction_on(10)
+
+        human.update(sleep_time)
+        human2.update(sleep_time)
+
+        target_time += target_delta
+        sleep_time = target_time - time.time()
+        if sleep_time > 0:
+            time.sleep(sleep_time)
+
+        if sleep_time != 0 and counter <= 0:
+            counter = 30
+            print('fps', 1. / sleep_time)
+
+        if counter > 0:
+            counter -= 1
+
     win.close()
 
 
