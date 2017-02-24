@@ -38,8 +38,6 @@ def main():
     human.start_draw(win)
     human2 = FemaleHuman(Point(150, 150))
     human2.start_draw(win)
-    human.set_speed(1)
-    human2.set_speed(2)
 
     def motion(event):
         pos = convert.pixel_to_line(
@@ -61,9 +59,6 @@ def main():
     counter = 30
 
     while game[0]:
-        human.set_direction_on(5)
-        human2.set_direction_on(10)
-
         human.update(sleep_time)
         human2.update(sleep_time)
 
