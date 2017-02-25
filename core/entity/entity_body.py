@@ -1,6 +1,4 @@
-from graph.graphics import GraphWin
-from graph.graphics import GraphicsObject
-from graph.graphics import Point
+from libs.graphics import GraphWin, GraphicsObject, Point
 
 
 class EntityBody:

@@ -1,6 +1,6 @@
-from entity.human.human_body import *
-from entity.human.parents import *
-from entity.human.visual_human import VisualHuman
+from app.entity.human.human_body import *
+from app.entity.human.parents import *
+from app.entity.human.visual_human import VisualHuman
 
 
 class ManHuman(VisualHuman):

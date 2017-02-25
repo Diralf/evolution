@@ -1,9 +1,9 @@
-from geometry import convert
-from geometry.vectors import Vector
-from graph.hexagon import *
-from weather.weather_generator import *
-from weather.weather_color import *
-from entity.human.man_human import *
+from app.weather.weather_generator import *
+from app.entity.human.man_human import *
+from app.weather.weather_color import *
+from core.geometry import convert
+from core.graph.hexagon import polygon_grid
+from libs.vectors import Vector
 
 # MAIN
 game = [True]
@@ -73,6 +73,9 @@ def main():
 
         if counter > 0:
             counter -= 1
+
+        if win.isClosed():
+            game[0]=False
 
     win.close()
 

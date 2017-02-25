@@ -1,7 +1,7 @@
 # CONVERSION
 from math import floor, sqrt
 
-from graph.graphics import Point
+from libs.graphics import Point
 
 
 class Hex:

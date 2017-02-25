@@ -1,9 +1,10 @@
-from entity.human.human import Human
-from entity.human.human_body import HumanBody
-from entity.human.parents import Parents
-from entity.human.simple_behavior import SimpleBehavior
-from entity.imovable import IMovable
-from entity.visual_entity import VisualEntity
+from app.entity.human.human import Human
+from app.entity.human.human_body import HumanBody
+from app.entity.human.parents import Parents
+from core.entity.imovable import IMovable
+from core.entity.visual_entity import VisualEntity
+
+from app.entity.human.simple_behavior import SimpleBehavior
 
 
 class VisualHuman(Human, VisualEntity, IMovable):

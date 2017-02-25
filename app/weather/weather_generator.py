@@ -1,4 +1,4 @@
-from weather.area import *
+from core.weather.area import Area
 
 
 def earth_climate(width, height):

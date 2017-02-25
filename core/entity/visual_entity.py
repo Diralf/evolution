@@ -1,6 +1,6 @@
-from entity.entity import Entity
-from entity.entity_body import EntityBody
-from graph.graphics import GraphWin
+from core.entity.entity_body import EntityBody
+from core.entity.entity import Entity
+from libs.graphics import GraphWin
 
 
 class VisualEntity(Entity):

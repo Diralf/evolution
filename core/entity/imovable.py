@@ -1,4 +1,4 @@
-from geometry.vectors import Vector
+from libs.vectors import Vector
 
 
 class IMovable:

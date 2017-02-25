@@ -1,5 +1,6 @@
-from entity.entity import *
-from entity.human.parents import Parents
+from app.entity.human.parents import Parents
+
+from core.entity.entity import *
 
 
 class Human(Entity):

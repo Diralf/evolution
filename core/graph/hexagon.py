@@ -1,5 +1,6 @@
 from math import pi, sin, cos, sqrt
-from graph.graphics import *
+
+from libs.graphics import *
 
 RTC = sqrt(3)  # REGULAR_TRIANGLE coefficient
 HRTC = sqrt(3) / 2  # half RTC
