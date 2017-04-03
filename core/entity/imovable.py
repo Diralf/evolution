@@ -10,6 +10,7 @@ class IMovable:
         self.direction = direction
         self.vspeed = vspeed
         self.speed = vspeed.norm()
+        self.is_changed = False
 
     def move(self, dx, dy):
         # type: (float, float) -> None
@@ -19,6 +20,7 @@ class IMovable:
         # type: (float) -> None
         self.speed = speed
         self.vspeed = self.direction * speed
+        self.is_changed = True
 
     def set_direction_in(self, angle):
         # type: (float) -> None
