@@ -13,11 +13,11 @@ class SimpleBehavior:
     def update(self, delta):
         if self.interval <= 0:
             if self.movement.isMove:
-                self.interval = self.travel.duration_stop
+                self.interval = random.randint(0, self.travel.duration_stop)
                 self.human.set_speed(0)
                 self.movement.isMove = False
             else:
-                self.interval = self.travel.duration_move
+                self.interval = random.randint(0, self.travel.duration_move)
                 self.human.set_direction_in(random.randint(0, 359))
                 self.human.set_speed(self.movement.speed)
                 self.movement.isMove = True

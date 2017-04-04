@@ -41,7 +41,7 @@ def climate_color(temperature, brightness):
         g = r
         b = 255
 
-    return color_rgb(int(r),int(g),int(b))
+    return int(r), int(g), int(b)
 
 
 def temperature_color(temperature, brightness):
@@ -55,4 +55,4 @@ def temperature_color(temperature, brightness):
         r = int(temperature * b_step * -1)
         g = r
         b = 255
-    return color_rgb(r,g,b)
+    return (r,g,b)

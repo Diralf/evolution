@@ -1,7 +1,5 @@
 from math import pi, sin, cos, sqrt
 
-from libs.graphics import *
-
 RTC = sqrt(3)  # REGULAR_TRIANGLE coefficient
 HRTC = sqrt(3) / 2  # half RTC
 
@@ -9,15 +7,15 @@ HRTC = sqrt(3) / 2  # half RTC
 def hex_corner(center_x, center_y, size, i):
     angle_deg = 60 * i + 30
     angle_rad = pi / 180 * angle_deg
-    return Point(center_x + size * cos(angle_rad),
-                 center_y + size * sin(angle_rad))
+    return (round(center_x + size * cos(angle_rad)),
+            round(center_y + size * sin(angle_rad)))
 
 
 def make_hexagon(center_x, center_y, size):
     corners = []
     for i in range(6):
         corners.append(hex_corner(center_x, center_y, size, i))
-    return corners
+    return tuple(corners)
 
 
 def make_hex_line(start_x, start_y, size, count):
@@ -41,14 +39,3 @@ def make_hex_grid(start_x, start_y, size, count_w, count_h):
                                       count_w))
     return hex_grid
 
-
-def polygon_grid(start, size, count_w, count_h):
-    poly_grid = []
-    hex_line = make_hex_grid(start.x, start.y, size, count_w, count_h)
-
-    for hx in hex_line:
-        p = Polygon(hx)
-        p.setOutline("#BBBBDD")
-        poly_grid.append(p)
-
-    return poly_grid

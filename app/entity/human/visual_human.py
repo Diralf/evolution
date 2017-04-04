@@ -8,7 +8,7 @@ from app.entity.human.simple_behavior import SimpleBehavior
 
 
 class VisualHuman(Human, VisualEntity, IMovable):
-    def __init__(self, body, human_data=HumanData()):
+    def __init__(self, body, human_data=None):
         # type: (HumanBody, HumanData) -> None
 
         Human.__init__(self, human_data)
@@ -20,7 +20,7 @@ class VisualHuman(Human, VisualEntity, IMovable):
     def move(self, dx, dy):
         # type: (float, float) -> None
         if dx != 0 or dy != 0:
-            self.body.figure.move(dx, dy)
+            self.body.position.move(dx, dy)
 
     def update(self, delta):
         Human.update(self, delta)

@@ -5,11 +5,11 @@ class IMovable:
 
     start_direction = Vector(1, 0)
 
-    def __init__(self, direction=Vector(1,0), vspeed=Vector(0,0)):
+    def __init__(self, direction=None, vspeed=None):
         # type: (Vector, Vector) -> None
-        self.direction = direction
-        self.vspeed = vspeed
-        self.speed = vspeed.norm()
+        self.direction = direction or Vector(1,0)
+        self.vspeed = vspeed or Vector(0,0)
+        self.speed = self.vspeed.norm()
         self.is_changed = False
 
     def move(self, dx, dy):

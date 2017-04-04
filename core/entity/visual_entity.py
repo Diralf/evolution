@@ -1,6 +1,7 @@
+from pygame.surface import Surface
+
 from core.entity.entity_body import EntityBody
 from core.entity.entity import Entity
-from libs.graphics import GraphWin
 
 
 class VisualEntity(Entity):
@@ -9,9 +10,6 @@ class VisualEntity(Entity):
         Entity.__init__(self)
         self.body = body
 
-    def start_draw(self, win):
-        # type: (GraphWin) -> None
-        self.body.start_draw(win)
-
-    def draw(self):
-        self.body.draw()
+    def draw(self, parent_surface):
+        # type: (Surface) -> None
+        self.body.draw(parent_surface)

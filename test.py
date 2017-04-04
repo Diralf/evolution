@@ -4,7 +4,7 @@ from app.weather.weather_generator import *
 from app.entity.human.man_human import *
 from app.weather.weather_color import *
 from core.geometry import convert
-from core.graph.hexagon import polygon_grid
+from core.graph.hexagon import polygon_grid, make_hex_grid
 from libs.vectors import Vector
 import pygame
 import pygame, sys
@@ -23,6 +23,8 @@ WHITE = (255, 255, 255)
 RED = (255,   0,   0)
 GREEN = (  0, 255,   0)
 BLUE = (  0,   0, 255)
+
+
 
 # draw on the surface object
 DISPLAYSURF.fill(WHITE)
@@ -56,19 +58,24 @@ game = [True]
 
 
 def main():
+    # размер окна
     w, h = 1200, 600
     win = GraphWin("My Circle", w, h)
     win.master.geometry('%dx%d+%d+%d' % (w, h, -10, 0))
 
+# размер поля
     grid_width = 38
     grid_height = 26
+# размер ячейки
     size = 20
+
 
     v1 = Vector(3, 5)
     v2 = Vector(5, 3)
 
     print(v1)
     print(v1 * 5)
+
 
     poly_grid = polygon_grid(
         Point(size, size), size, grid_width, grid_height)

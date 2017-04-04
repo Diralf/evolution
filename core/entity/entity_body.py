@@ -1,31 +1,14 @@
-from libs.graphics import GraphWin, GraphicsObject, Point
+from pygame.surface import Surface
+
+from core.graph.point import Point
 
 
 class EntityBody:
 
-    def __init__(self, figure, position=Point(0, 0), color="#999999", min_size=5, max_size=15):
-        # type: (GraphicsObject, Point, str, float, float) -> None
-        self.figure = figure
-        self.position = position
-        self.size = min_size
-        self.max_size = max_size
-        self.color = color
+    def __init__(self, surface, position=None):
+        # type: (Surface, Point) -> None
+        self.surface = surface
+        self.position = position or Point(0, 0)
 
-    def add_size(self, dsize):
-        # type: (float) -> None
-        if self.size > self.max_size:
-            self.size = self.max_size
-        else:
-            self.size += dsize
-
-    def change_color(self, color):
-        # type: (str) -> None
-        self.color = color
-
-    def start_draw(self, win):
-        # type: (GraphWin) -> None
-        self.figure.draw(win)
-        self.figure.setFill(self.color)
-
-    def draw(self):
-        self.figure.setFill(self.color)
+    def draw(self, parent_surface):
+        parent_surface.blit(self.surface, self.position.get_point())
