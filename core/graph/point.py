@@ -4,7 +4,7 @@ class Point:
         self.y = y
 
     def get_point(self):
-        return self.x, self.y
+        return int(self.x), int(self.y)
 
     def move(self, dx, dy):
         self.x += dx

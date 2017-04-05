@@ -1,25 +1,28 @@
+from app import globvars
 from app.entity.human.parents import Parents
 
 
 class MovementData:
-    def __init__(self, speed=0.5):
+    def __init__(self, speed=1):
         # type: (float) -> None
         self.speed = speed
         self.isMove = False
 
 
 class TemperatureData:
-    def __init__(self, temperature=36.6, weight=0.):
+    def __init__(self, temperature=globvars.normal_temperature, increase=0.1, decrease=0.1):
         # type: (float, float) -> None
         self.temperature = temperature
-        self.weight = weight
+        self.increase = increase
+        self.decrease = decrease
 
 
 class HealthData:
-    def __init__(self, health=100., age=0.):
-        # type: (float, float) -> None
+    def __init__(self, health=99., age=0., recovery=globvars.normal_helth_recovery):
+        # type: (float, float, float) -> None
         self.health = health
         self.age = age
+        self.recovery = recovery
 
 
 class SocialData:

@@ -1,7 +1,7 @@
 from core.weather.area import Area
 
 
-def earth_climate(width, height):
+def create_earth_area(width, height):
     planet = []
     top = -50
     middle = 100

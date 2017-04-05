@@ -10,5 +10,4 @@ class Human(Entity):
         self.data = human_data or HumanData()
 
     def update(self, delta):
-        self.data.health.age += 0.1
-        self.data.temperature.temperature *= self.data.temperature.weight
+        pass

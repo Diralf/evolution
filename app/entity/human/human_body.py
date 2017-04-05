@@ -30,33 +30,23 @@ images_female = (
     load_half_image('asset/female8.png')
 )
 
-surf_man = pygame.image.load('asset/man.png')
-# surf_man = pygame.Surface((6, 6), pygame.SRCALPHA, 32)
-# #surf_man = surf_man.convert_alpha()
-# pygame.draw.rect(surf_man, (0, 0, 0), (0, 0, 6, 6), 1)
-
-surf_female = pygame.image.load('asset/female.png')
-# surf_female = pygame.Surface((6, 6), pygame.SRCALPHA, 32)
-# #surf_female = surf_female.convert_alpha()
-# pygame.draw.circle(surf_female, (0, 0, 0), (3, 3), 3, 1)
-
 
 class HumanBody(EntityBody):
     min_size = 5
     max_size = 15
 
-    def __init__(self, surface, position=None):
+    def __init__(self, surface, position=None, offset=None):
         # type: (Surface, Point) -> None
-        EntityBody.__init__(self, surface, position)
+        super(HumanBody, self).__init__(surface, position, offset)
 
 
 class ManHumanBody(HumanBody):
     def __init__(self, position):
         # type: (Point) -> None
-        HumanBody.__init__(self, random.choice(images_man), position)
+        super(ManHumanBody, self).__init__(random.choice(images_man), position, Point(16, 32))
 
 
 class FemaleHumanBody(HumanBody):
     def __init__(self, position):
         # type: (Point) -> None
-        HumanBody.__init__(self, random.choice(images_female), position)
+        super(FemaleHumanBody, self).__init__(random.choice(images_female), position, Point(16, 32))

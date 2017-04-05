@@ -1,102 +1,111 @@
-import pygame, sys
+import os
 import random
-from pygame.locals import *
-from pygame.time import get_ticks
+import sys
 
+import pygame
+from pygame.locals import *
+
+from app import globvars
 from app.entity.human.man_human import ManHuman, FemaleHuman
-from app.graph.pygame_hexagon import draw_polygon_grid
-from app.weather.weather_generator import earth_climate
+from app.weather.weather_color import climate_color
+from app.weather.weather_generator import create_earth_area
+from core.entity.entity_group import EntityGroup
+from core.geometry import convert
+from core.graph.hexagon import make_hex_grid
 from core.graph.point import Point
 
-pygame.init()
 
-# ---- init application -----------------
+class Game:
+    def __init__(self):
+        pygame.init()
+        self.screen = None
+        self.background = None
 
-FPS = 30  # frames per second setting
-fpsClock = pygame.time.Clock()
+        self.font_obj = pygame.font.Font('freesansbold.ttf', 12)
 
-# размер окна
-w, h = 1200, 800
+        self.planet_area = create_earth_area(globvars.grid_width, globvars.grid_height)
+        self.all_sprites_list = EntityGroup()
+        self.humans = []
+        self.hexagon_grid_points = make_hex_grid(globvars.cell_size, globvars.cell_size, globvars.cell_size, globvars.grid_width, globvars.grid_height)
 
-# set up the window
-DISPLAYSURF = pygame.display.set_mode((w, h), 0, 32)
-BACKGROUND = pygame.Surface((w, h))
+        self.fpsClock = pygame.time.Clock()
+        self.init_window()
+        self.init_background()
+        self.init_humans()
 
-pygame.display.set_caption('Evolution by Diralf')
+    def init_window(self):
+        os.environ['SDL_VIDEO_WINDOW_POS'] = '{0},{1}'.format(0, 30)
+        self.screen = pygame.display.set_mode((globvars.screen_width, globvars.screen_height), 0, 32)
+        os.environ['SDL_VIDEO_WINDOW_POS'] = ''
 
-# set up the colors
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
+        pygame.display.set_caption('Evolution by Diralf')
 
-# размер поля
-grid_width = 38
-grid_width = 30
-grid_height = 26
-grid_height = 22
-# размер ячейки
-size = 24
+    def init_humans(self):
+        for i in range(globvars.human_count * 2):
+            if i < globvars.human_count:
+                hum = ManHuman(Point(random.randint(0, globvars.screen_width), random.randint(0, globvars.screen_height)))
+            else:
+                hum = FemaleHuman(Point(random.randint(0, globvars.screen_width), random.randint(0, globvars.screen_height)))
+            self.humans.append(hum)
+            self.all_sprites_list.add(hum.body)
 
-# ------- init game --------------
+    def init_background(self):
+        self.background = pygame.Surface((globvars.screen_width, globvars.screen_height))
+        self.background.fill(globvars.WHITE)
 
-planet = earth_climate(grid_width, grid_height)
+        for i in range(len(self.planet_area)):
+            pygame.draw.polygon(self.background, climate_color(self.planet_area[i].temperature, 100), self.hexagon_grid_points[i])
+            pygame.draw.polygon(self.background, (200, 200, 200), self.hexagon_grid_points[i], 1)
 
-humans = []
+    def draw_text(self, surface, x, y, text, color=(0,0,0)):
+        textSurfaceObj = self.font_obj.render(text, True, color, (0,0,0))
+        textRectObj = textSurfaceObj.get_rect()
+        textRectObj.center = (x, y)
+        surface.blit(textSurfaceObj, textRectObj)
 
-human_count = 200
-for i in range(human_count*2):
-    if i < human_count:
-        hum = ManHuman(Point(random.randint(0, w), random.randint(0, h)))
-    else:
-        hum = FemaleHuman(Point(random.randint(0, w), random.randint(0, h)))
-    humans.append(hum)
+    def update_app(self, delta):
+        for human in self.humans:
+            human.update(delta)
+        self.all_sprites_list.update()
 
-# ---- init drawing
+    def draw_app(self, surface):
+        surface.blit(self.background, (0, 0))
 
-BACKGROUND.fill(WHITE)
-draw_polygon_grid(BACKGROUND, size, size, size, grid_width, grid_height, planet)
+        x, y = pygame.mouse.get_pos()
+        pygame.draw.circle(surface, (0, 255, 0), (x, y), 3)
 
-# --- init obejcts
+        # pos = convert.pixel_to_line(
+        #     x - globvars.cell_size,
+        #     y - globvars.cell_size,
+        #     globvars.cell_size,
+        #     globvars.grid_width)
+        #
+        # pygame.draw.polygon(surface, (0, 0, 255), self.hexagon_grid_points[pos])
 
-cirx = 0
+        self.all_sprites_list.draw(surface)
 
+        for human in self.humans:
+            self.draw_text(surface, human.body.position.x + 24, human.body.position.y - 30,
+                           'h {0}'.format(int(human.data.health.health)),(0, 255, 0))
+            self.draw_text(surface, human.body.position.x + 24, human.body.position.y - 18,
+                           'a {0}'.format(int(human.data.health.age)), (0, 255, 255))
+            self.draw_text(surface, human.body.position.x + 24, human.body.position.y - 6,
+                           't {0}'.format(int(human.data.temperature.temperature)), (255, 0, 0))
+        # all_sprites_list.draw_debug(DISPLAYSURF)
 
-def update_app(delta):
-    for human in humans:
-        human.update(delta)
+    def start(self):
+        # run the game loop
+        while True:
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    pygame.quit()
+                    sys.exit()
 
+            self.update_app(1)
+            self.draw_app(self.screen)
 
-def draw_app():
-    DISPLAYSURF.blit(BACKGROUND, (0, 0))
-    pygame.draw.circle(DISPLAYSURF, BLUE, (cirx, 50), 20, 0)
+            pygame.display.update()
+            self.fpsClock.tick(globvars.FPS)
 
-    humans_depth = {}
-
-    for human in humans:
-        pos = int(human.body.position.y)
-        if -1 < pos < 900:
-            if not (pos in humans_depth):
-                humans_depth[pos] = []
-            humans_depth[pos].append(human)
-
-    for i in range(900):
-        if i in humans_depth:
-            for human in humans_depth[i]:
-                human.draw(DISPLAYSURF)
-
-
-# run the game loop
-while True:
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
-
-    cirx += 1
-    update_app(1)
-    draw_app()
-
-    pygame.display.update()
-    fpsClock.tick(FPS)
+globvars.game = Game()
+globvars.game.start()
